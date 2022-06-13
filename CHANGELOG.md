@@ -1,5 +1,17 @@
 # Release Notes for KlaviyoConnect
 
+## 5.0.1
+
+## Fixed
+
+- Bumped major version number for Craft 4
+
+## Added
+
+- Added a service method to retrieve a Klaviyo Person ID using an email address
+- Added a service method to update a Klaviyo profile 
+- Added a controller method for updating a Klaviyo profile
+
 ## 4.0.9 - 2022-06-07
 
 ## Fixed
