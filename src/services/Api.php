@@ -342,6 +342,43 @@ class Api extends Base
         return $content;
     }
 
+    // MatJ
+    /**
+     * removeProfileFromList.
+     *
+     * @author	Unknown
+     * @since	v0.0.1
+     * @version	v1.0.0	Monday, May 23rd, 2022.
+     * @access	public
+     * @param	klaviyolist	&$list               	
+     * @param	profile    	&$profile            	
+     * @param	boolean    	$useSubscribeEndpoint	Default: false
+     * @return	mixed
+     */
+    public function removeProfileFromList(KlaviyoList &$list, Profile &$profile) // no return type as mixed is PHP 8 only
+    {
+        if (!$profile->hasEmail()) {
+            throw new Exception('You must identify a user by email.');
+        }
+
+        $params = [
+            'api_key' => $this->getSetting('klaviyoApiKey'),
+            'profiles' => [],
+        ];
+
+        $mapped = $profile->toArray();
+        $email = $mapped['$email'];
+        unset($mapped['$email']);
+        $mapped['email'] = $email;
+        if (sizeof($mapped) > 0) {
+            $params['profiles'][] = $mapped;
+        }
+
+        $response = $this->clientV2->delete("list/{$list->id}/subscribe", ['json' => $params]);
+        $content = $this->getObjectResponse($response);
+        return $content;
+    }
+
     /**
      * getObjectResponse.
      *

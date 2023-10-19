@@ -204,6 +204,33 @@ class Track extends Base
         }
     }
 
+    // MatJ
+    /**
+     * removeFromLists.
+     *
+     * @author	Unknown
+     * @since	v0.0.1
+     * @version	v1.0.0	Monday, May 23rd, 2022.
+     * @access	public
+     * @param	mixed  	$listIds             	
+     * @param	mixed  	$profileParams       	
+     * @return	void
+     */
+    public function removeFromLists($listIds, $profileParams): void
+    {
+        $profile = $this->createProfile($profileParams);
+
+        foreach ($listIds as $listId) {
+            $list = new KlaviyoList(['id' => $listId]);
+
+            try {
+                Plugin::getInstance()->api->removeProfileFromList($list, $profile);
+            } catch (RequestException $e) {
+                // Swallow. Klaviyo responds with a 200.
+            }
+        }
+    }
+
     /**
      * trackEvent.
      *
